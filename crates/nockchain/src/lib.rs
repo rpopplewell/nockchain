@@ -575,6 +575,9 @@ pub async fn init_with_kernel(
     if let Some(parent) = socket_path.parent() {
         fs::create_dir_all(parent)?;
     }
+    if socket_path.exists() {
+        fs::remove_file(socket_path)?;
+    }
     let listener = UnixListener::bind(socket_path)?;
 
     nockapp
